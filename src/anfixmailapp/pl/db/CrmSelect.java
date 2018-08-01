@@ -95,12 +95,49 @@ public class CrmSelect {
         
         
         for ( Object[] l : leads){
-            LeadDTO lead = new LeadDTO((String) l[0], (String) l[1], (String) l[2], (String) l[3]);
+            LeadDTO lead = new LeadDTO();
+            lead.setIlosc((String) l[0]);
+            lead.setOwnerName((String) l[1]);
+            lead.setAuditUc((String) l[2]);
+            lead.setTerritoryCode((String) l[3]);
             leadsL.add(lead);
         }
         
         return leadsL;
     }
+    
+
+    //raport (uproszczony)
+    public List<LeadDTO> getListHotLeadForUserAbbr(String userId) {
+        
+        List<LeadDTO> leadsL = new ArrayList<LeadDTO>();
+        
+        List<Object []> leads = em.createNativeQuery("SELECT companys_data.abbr, companys_data.nip, processes_data.audit_dc,\n" +
+                    "    CASE\n" +
+                    "        WHEN processes_data.counter_phone_contacts >= 1 THEN 'TAK'\n" +
+                    "        ELSE 'NIE'\n" +
+                    "    END contact_try,\n" +
+                    "    CASE\n" +
+                    "        WHEN processes_data.counter_meetings >= 1 THEN 'TAK'\n" +
+                    "        ELSE 'NIE'\n" +
+                    "    END meeting_try\n" +
+                    "FROM companys_data, processes_data\n" +
+                    "WHERE companys_data.id = processes_data.company_id and processes_data.process_type = 'HOT_LEAD' "
+                + "and processes_data.owner_id = '" + userId + "'").getResultList();
+        
+        
+        for ( Object[] l : leads){
+            LeadDTO lead = new LeadDTO();
+            lead.setAbbr((String) l[0]);
+            lead.setNip((String) l[1]);
+            lead.setAuditDc((String) l[2]);
+            lead.setMeetingTry((String) l[3]);
+            leadsL.add(lead);
+        }
+        
+        return leadsL;
+    }
+
     
     
 }

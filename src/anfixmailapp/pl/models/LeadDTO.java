@@ -15,13 +15,11 @@ public class LeadDTO {
     private String ownerName;
     private String auditUc;
     private String territoryCode;
-
-    public LeadDTO(String ilosc, String ownerName, String auditUc, String territoryCode) {
-        this.ilosc = ilosc;
-        this.ownerName = ownerName;
-        this.auditUc = auditUc;
-        this.territoryCode = territoryCode;
-    }
+    
+    private String abbr;
+    private String nip;
+    private String auditDc;
+    private String meetingTry;
 
     public String getIlosc() {
         return ilosc;
@@ -53,6 +51,38 @@ public class LeadDTO {
 
     public void setTerritoryCode(String territoryCode) {
         this.territoryCode = territoryCode;
+    }
+
+    public String getAbbr() {
+        return abbr;
+    }
+
+    public void setAbbr(String abbr) {
+        this.abbr = abbr;
+    }
+
+    public String getNip() {
+        return nip;
+    }
+
+    public void setNip(String nip) {
+        this.nip = nip;
+    }
+
+    public String getAuditDc() {
+        return auditDc;
+    }
+
+    public void setAuditDc(String auditDc) {
+        this.auditDc = auditDc;
+    }
+
+    public String getMeetingTry() {
+        return meetingTry;
+    }
+
+    public void setMeetingTry(String meetingTry) {
+        this.meetingTry = meetingTry;
     }
     
     

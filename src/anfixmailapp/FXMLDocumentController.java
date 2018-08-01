@@ -54,8 +54,18 @@ public class FXMLDocumentController implements Initializable {
             for ( LeadDTO l : leads){
                txt += "il: " + l.getIlosc() 
                        + " OwnerName: " + l.getOwnerName()
-                       + " DateCreate: " + l.getAuditUc()
+                       + " UserCreated: " + l.getAuditUc()
                        + " TerritoryCode: " + l.getTerritoryCode()
+                       + "\n";
+            }
+            
+            
+            List<LeadDTO> leadsAbbr = crmSelect.getListHotLeadForUserAbbr(u.getId().toString());
+            for ( LeadDTO l : leadsAbbr){
+               txt += "abbr: " + l.getAbbr()
+                       + " Nip: " + l.getNip()
+                       + " DateCreated: " + l.getAuditDc()
+                       + " MeetingTr: " + l.getMeetingTry()
                        + "\n";
             }
             
