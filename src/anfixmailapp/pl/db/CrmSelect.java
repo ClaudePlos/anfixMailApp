@@ -8,6 +8,7 @@ package anfixmailapp.pl.db;
 import anfixmailapp.pl.models.LeadDTO;
 import anfixmailapp.pl.models.UserVO;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -96,7 +97,7 @@ public class CrmSelect {
         
         for ( Object[] l : leads){
             LeadDTO lead = new LeadDTO();
-            lead.setIlosc((String) l[0]);
+            lead.setIlosc( Long.toString((Long) l[0]) );
             lead.setOwnerName((String) l[1]);
             lead.setAuditUc((String) l[2]);
             lead.setTerritoryCode((String) l[3]);
@@ -130,7 +131,8 @@ public class CrmSelect {
             LeadDTO lead = new LeadDTO();
             lead.setAbbr((String) l[0]);
             lead.setNip((String) l[1]);
-            lead.setAuditDc((String) l[2]);
+            Timestamp timestamp = (Timestamp) l[2];
+            lead.setAuditDc( timestamp.toString() );
             lead.setMeetingTry((String) l[3]);
             leadsL.add(lead);
         }
