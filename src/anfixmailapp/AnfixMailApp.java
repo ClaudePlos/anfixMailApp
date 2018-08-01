@@ -22,6 +22,8 @@ public class AnfixMailApp extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         
         Scene scene = new Scene(root);
+        //stage.getIcons().add(new Image("/com/images/icon.png"));
+        stage.setTitle("#anfix");
         
         stage.setScene(scene);
         stage.show();

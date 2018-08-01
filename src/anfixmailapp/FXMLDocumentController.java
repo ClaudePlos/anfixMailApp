@@ -7,6 +7,7 @@ package anfixmailapp;
 
 import anfixmailapp.pl.confing.SendMailTLS;
 import anfixmailapp.pl.db.CrmSelect;
+import anfixmailapp.pl.models.LeadDTO;
 import anfixmailapp.pl.models.UserVO;
 import java.net.URL;
 import java.util.List;
@@ -37,20 +38,30 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
-        String ret = mail.sendMail();
+        String ret = mail.sendMail("Topic","Massage");
         label.setText(ret);
     }
     
     @FXML
     private void getData(ActionEvent event) {
-        String usersEmail = "";
+        String txt = "";
         List<UserVO> listUsers = crmSelect.getListUsersWithReportsSales(); 
         
         for ( UserVO u : listUsers ){
-            usersEmail += u.getEmail();
+            txt += u.getEmail() + "\n";
+            
+            List<LeadDTO> leads = crmSelect.getListHotLeadForUser(u.getId().toString());
+            for ( LeadDTO l : leads){
+               txt += "il: " + l.getIlosc() 
+                       + " OwnerName: " + l.getOwnerName()
+                       + " DateCreate: " + l.getAuditUc()
+                       + " TerritoryCode: " + l.getTerritoryCode()
+                       + "\n";
+            }
+            
         }
         
-        txtArea01.setText(usersEmail);
+        txtArea01.setText(txt);
         
     }
     

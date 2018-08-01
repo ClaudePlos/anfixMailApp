@@ -22,9 +22,25 @@ public class SendMailTLS {
 
 	}
         
-        public String sendMail() {
-
-		final String username = "skowronski.klaudiusz@gmail.com";
+        public String sendMail(String topic, String massage) {
+            
+                //Gmail
+//		final String username = "skowronski.klaudiusz@gmail.com";
+//		final String password = "Politechnika!@";
+//
+//		Properties props = new Properties();
+//                props.setProperty("mail.transport.protocol", "smtp");     
+//                props.setProperty("mail.host", "smtp.gmail.com");  
+//		props.put("mail.smtp.auth", "true");
+//		props.put("mail.smtp.starttls.enable", "true");
+//		props.put("mail.smtp.host", "smtp.googlemail.com");
+//		props.put("mail.smtp.port", "465");
+//                props.put("mail.smtp.socketFactory.port", "465");  
+//                props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");  
+//                props.put("mail.smtp.socketFactory.fallback", "false");  
+                
+                //cartrack
+                final String username = "kskowronski@cartrack.pl";
 		final String password = "Politechnika!@";
 
 		Properties props = new Properties();
@@ -32,11 +48,11 @@ public class SendMailTLS {
                 props.setProperty("mail.host", "smtp.gmail.com");  
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.googlemail.com");
+		props.put("mail.smtp.host", "cartrack.nazwa.pl");
 		props.put("mail.smtp.port", "465");
                 props.put("mail.smtp.socketFactory.port", "465");  
                 props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");  
-                props.put("mail.smtp.socketFactory.fallback", "false");  
+                props.put("mail.smtp.socketFactory.fallback", "false");
 
 		Session session = Session.getInstance(props,
 		  new javax.mail.Authenticator() {
@@ -48,18 +64,19 @@ public class SendMailTLS {
 		try {
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("skowronski.klaudiusz@gmail.com")); // mail From
+			message.setFrom(new InternetAddress("kskowronski@cartrack.pl")); // mail From
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("claude-plos@o2.pl")); // mail TO
-			message.setSubject("Temat"); // Temat
+                        //message.setRecipients(Message.RecipientType.CC, InternetAddress.parse("claude-plos@o2.pl")); // mail CC
+			message.setSubject(topic); // Temat
                         // Wiadomosc
-			message.setText("Dear Mail Crawler,"
-				+ "\n\n No spam to my email, please!");
+			message.setText("Hi,"
+				+ "\n\n " + massage);
 
 			Transport.send(message);
 
 			System.out.println("Done");
                         
-                        return "OK";
+                        return "Done";
 
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
