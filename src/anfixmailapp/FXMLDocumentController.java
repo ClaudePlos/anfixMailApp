@@ -38,7 +38,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
-        String ret = mail.sendMail("Topic","Massage");
+        String ret = mail.sendMail("Topic","Massage","claude-plos@o2.pl");
         label.setText(ret);
     }
     
@@ -48,31 +48,51 @@ public class FXMLDocumentController implements Initializable {
         List<UserVO> listUsers = crmSelect.getListUsersWithReportsSales(); 
         
         for ( UserVO u : listUsers ){
-            txt += u.getEmail() + "\n";
+            txt = "Witaj,"+ "\n\n ";
+            if ( u.getUserName().equals("lstachira@cartrack.pl") || u.getUserName().equals("tmiklaszewski@cartrack.pl") || u.getUserName().equals("mnitka@cartrack.pl")  ){
+                
             
-            List<LeadDTO> leads = crmSelect.getListHotLeadForUser(u.getId().toString());
-            for ( LeadDTO l : leads){
-               txt += "il: " + l.getIlosc() 
-                       + " OwnerName: " + l.getOwnerName()
-                       + " UserCreated: " + l.getAuditUc()
-                       + " TerritoryCode: " + l.getTerritoryCode()
-                       + "\n";
-            }
-            
-            
-            List<LeadDTO> leadsAbbr = crmSelect.getListHotLeadForUserAbbr(u.getId().toString());
-            for ( LeadDTO l : leadsAbbr){
-               txt += "abbr: " + l.getAbbr()
-                       + " Nip: " + l.getNip()
-                       + " DateCreated: " + l.getAuditDc()
-                       + " MeetingTr: " + l.getMeetingTry()
-                       + "\n";
-            }
-            
+                txt += u.getUserName() + "<br>";
+                txt +=  "<br>";
+                
+                txt += "Ilości hot leadów";
+                txt += "<table style=\"width:100%\">";
+                txt += "<tr><th>Ilosc</th><th>OwnerName</th><th>UserCreated</th><th>TerritoryCode</th></tr>"; 
+                List<LeadDTO> leads = crmSelect.getListHotLeadForUser(u.getId().toString());
+                for ( LeadDTO l : leads){
+                   txt += "<tr>"; 
+                   txt += "<td>" + l.getIlosc() + "</td>"
+                        + "<td>" + l.getOwnerName() + "</td>"
+                        + "<td> " + l.getAuditUc() + "</td>"
+                        + "<td>" + l.getTerritoryCode() + "</td>"
+                        + "</tr>";                  
+                }
+                txt +=  "</table>";
+                txt +=  "<br>";
+                
+                txt += "Ilości hot leadów - Raport";
+                txt += "<table style=\"width:100%\">";
+                txt += "<tr><th>Abbr</th><th>Nip</th><th>DateCreated</th><th>MeetingTr</th></tr>"; 
+                List<LeadDTO> leadsAbbr = crmSelect.getListHotLeadForUserAbbr(u.getId().toString());
+                for ( LeadDTO l : leadsAbbr){
+                   txt += "<tr>"; 
+                   txt += "<td>" + l.getAbbr() + "</td>"
+                        + "<td>" + l.getNip() + "</td>"
+                        + "<td>" + l.getAuditDc() + "</td>"
+                        + "<td>" + l.getMeetingTry() + "</td>"
+                        + "</tr>"; 
+                }
+                txt +=  "</table>";
+                
+                String ret = mail.sendMail("Raport Hot Lead", txt, "claude-plos@o2.pl");
+                        
+            } 
+
         }
         
-        txtArea01.setText(txt);
         
+        
+        txtArea01.setText(txt);
     }
     
     @Override
