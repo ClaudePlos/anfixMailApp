@@ -60,6 +60,8 @@ public class CrmSelect {
         
         List<UserVO> usersL = new ArrayList<UserVO>();
         
+
+        
         List<Object []> users = em.createNativeQuery("SELECT row_number() over(order by users.id) as sqlid, email, users.username, users.id\n" +
 "			FROM users, permission_definitions, profiles_permissions, profiles\n" +
 "			WHERE permission_definitions.id =profiles_permissions.permission_id\n" +
@@ -86,13 +88,14 @@ public class CrmSelect {
         
         List<LeadDTO> leadsL = new ArrayList<LeadDTO>();
         
-        List<Object []> leads = em.createNativeQuery("SELECT count(1) hot_leads, processes_data.owner_name, processes_data.audit_uc, companys_data.territory_code " 
-                + "FROM processes_data, companys_data " 
+        List<Object []> leads = em.createNativeQuery("SELECT count(1) hot_leads, processes_data.owner_name, processes_data.audit_uc, regions.region_name " 
+                + "FROM processes_data, companys_data, regions " 
                 + "WHERE companys_data.id = processes_data.company_id "
+                + "and regions.id = companys_data.province_id "
                 + "and processes_data.process_type = 'HOT_LEAD' "
                 + "and date(processes_data.audit_dc) = date(now()) "
                 + "and owner_id = '" + userId + " '"
-                + "group by processes_data.owner_name, processes_data.audit_uc, companys_data.territory_code").getResultList();
+                + "group by processes_data.owner_name, processes_data.audit_uc, regions.region_name").getResultList();
         
         
         for ( Object[] l : leads){
@@ -100,7 +103,7 @@ public class CrmSelect {
             lead.setIlosc( Long.toString((Long) l[0]) );
             lead.setOwnerName((String) l[1]);
             lead.setAuditUc((String) l[2]);
-            lead.setTerritoryCode((String) l[3]);
+            lead.setRegionName((String) l[3]);
             leadsL.add(lead);
         }
         

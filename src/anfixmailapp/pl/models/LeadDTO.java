@@ -15,6 +15,7 @@ public class LeadDTO {
     private String ownerName;
     private String auditUc;
     private String territoryCode;
+    private String regionName;
     
     private String abbr;
     private String nip;
@@ -83,6 +84,14 @@ public class LeadDTO {
 
     public void setMeetingTry(String meetingTry) {
         this.meetingTry = meetingTry;
+    }
+
+    public String getRegionName() {
+        return regionName;
+    }
+
+    public void setRegionName(String regionName) {
+        this.regionName = regionName;
     }
     
     

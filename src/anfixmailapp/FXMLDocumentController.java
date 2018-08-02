@@ -49,22 +49,31 @@ public class FXMLDocumentController implements Initializable {
         
         for ( UserVO u : listUsers ){
             txt = "Witaj,"+ "\n\n ";
-            if ( u.getUserName().equals("lstachira@cartrack.pl") || u.getUserName().equals("tmiklaszewski@cartrack.pl") || u.getUserName().equals("mnitka@cartrack.pl")  ){
+            if ( u.getEmail().equals("lstachira@cartrack.pl") || u.getEmail().equals("tmiklaszewski@cartrack.pl") 
+                    || u.getEmail().equals("mnitka@cartrack.pl") || u.getEmail().equals("prakoczy@cartrack.pl")  ){
                 
+                if (u.getEmail().equals("lstachira@cartrack.pl") || u.getEmail().equals("tmiklaszewski@cartrack.pl") || u.getEmail().equals("mnitka@cartrack.pl")){
+                    u.setId(2);
+                }
             
-                txt += u.getUserName() + "<br>";
+                txt += u.getUserName() /*+ " id: " + u.getId()(*/ + "<br>";
                 txt +=  "<br>";
                 
                 txt += "Ilości hot leadów";
                 txt += "<table style=\"width:100%\">";
-                txt += "<tr><th>Ilosc</th><th>OwnerName</th><th>UserCreated</th><th>TerritoryCode</th></tr>"; 
+                txt += "<tr><th style='text-align:left;'>Ilosc:</th><th style='text-align:left;'>OwnerName:</th><th style='text-align:left;'>UserCreated:</th><th style='text-align:left;'>RegionName:</th></tr>"; 
                 List<LeadDTO> leads = crmSelect.getListHotLeadForUser(u.getId().toString());
+                
+                if ( leads.size() == 0 ) {
+                    continue;
+                }
+                
                 for ( LeadDTO l : leads){
                    txt += "<tr>"; 
                    txt += "<td>" + l.getIlosc() + "</td>"
                         + "<td>" + l.getOwnerName() + "</td>"
                         + "<td> " + l.getAuditUc() + "</td>"
-                        + "<td>" + l.getTerritoryCode() + "</td>"
+                        + "<td>" + l.getRegionName()+ "</td>"
                         + "</tr>";                  
                 }
                 txt +=  "</table>";
@@ -72,7 +81,7 @@ public class FXMLDocumentController implements Initializable {
                 
                 txt += "Ilości hot leadów - Raport";
                 txt += "<table style=\"width:100%\">";
-                txt += "<tr><th>Abbr</th><th>Nip</th><th>DateCreated</th><th>MeetingTr</th></tr>"; 
+                txt += "<tr><th style='text-align:left;'>Abbr:</th><th style='text-align:left;'>Nip:</th><th style='text-align:left;'>DateCreated:</th><th style='text-align:left;'>MeetingTr:</th></tr>"; 
                 List<LeadDTO> leadsAbbr = crmSelect.getListHotLeadForUserAbbr(u.getId().toString());
                 for ( LeadDTO l : leadsAbbr){
                    txt += "<tr>"; 
@@ -83,6 +92,7 @@ public class FXMLDocumentController implements Initializable {
                         + "</tr>"; 
                 }
                 txt +=  "</table>";
+           
                 
                 String ret = mail.sendMail("Raport Hot Lead", txt, "claude-plos@o2.pl");
                         
