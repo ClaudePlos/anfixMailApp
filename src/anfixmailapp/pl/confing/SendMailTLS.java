@@ -5,9 +5,9 @@
  */
 package anfixmailapp.pl.confing;
 
+import anfixmailapp.pl.models.CcDTO;
+import java.util.List;
 import java.util.Properties;
-import javafx.application.Application;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -22,7 +22,7 @@ public class SendMailTLS {
 
 	}
         
-        public String sendMail(String topic, String massage, String mailTo) {
+        public String sendMail(String topic, String massage, String mailTo, List<CcDTO> listCC) {
             
                 //Gmail
 //		final String username = "skowronski.klaudiusz@gmail.com";
@@ -66,7 +66,11 @@ public class SendMailTLS {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("kskowronski@cartrack.pl")); // mail From
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailTo)); // mail TO
-                        message.setRecipients(Message.RecipientType.CC, InternetAddress.parse("claude-plos@o2.pl")); // mail CC
+                        
+                        for (CcDTO cc : listCC) {
+                           message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(cc.getMail())); // mail CC 
+                        }
+                        
                         
 			message.setSubject(topic); // Temat
                         message.setContent(massage, "text/html; charset=utf-8");

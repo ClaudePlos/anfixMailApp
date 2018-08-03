@@ -7,9 +7,11 @@ package anfixmailapp;
 
 import anfixmailapp.pl.confing.SendMailTLS;
 import anfixmailapp.pl.db.CrmSelect;
+import anfixmailapp.pl.models.CcDTO;
 import anfixmailapp.pl.models.LeadDTO;
 import anfixmailapp.pl.models.UserVO;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -17,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javax.ejb.Schedule;
 
 
 /**
@@ -34,18 +37,37 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private TextArea txtArea01;
-    
+      
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
-        String ret = mail.sendMail("Topic","Massage","claude-plos@o2.pl");
+        String ret = test();
         label.setText(ret);
     }
     
     @FXML
-    private void getData(ActionEvent event) {
+    private void runCrmCartrackReportHotLeadButton(ActionEvent event) {
+        runCrmCartrackReportHotLead();
+    }
+    
+    public String test(){
+        List<CcDTO> ccList = new ArrayList<>();
+        CcDTO cc = new CcDTO();
+        cc.setMail("klaudsys@gmail.com");
+        ccList.add(cc);
+        String ret = mail.sendMail("Topic","Massage","claude-plos@o2.pl", ccList);
+        return ret;
+    }
+    
+    
+    public void runCrmCartrackReportHotLead() {
         String txt = "";
         List<UserVO> listUsers = crmSelect.getListUsersWithReportsSales(); 
+        
+        List<CcDTO> ccList = new ArrayList<>();
+        CcDTO cc = new CcDTO();
+        cc.setMail("klaudsys@gmail.com");
+        ccList.add(cc);
         
         for ( UserVO u : listUsers ){
             txt = "Witaj,"+ "\n\n ";
@@ -94,7 +116,7 @@ public class FXMLDocumentController implements Initializable {
                 txt +=  "</table>";
            
                 
-                String ret = mail.sendMail("Raport Hot Lead", txt, u.getEmail());
+                String ret = mail.sendMail("Raport Hot Lead", txt, u.getEmail(), ccList);
                         
             //} 
 
@@ -104,6 +126,7 @@ public class FXMLDocumentController implements Initializable {
         
         txtArea01.setText(txt);
     }
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
