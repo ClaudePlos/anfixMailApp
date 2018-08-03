@@ -7,6 +7,8 @@ package anfixmailapp.pl.job;
 
 import anfixmailapp.FXMLDocumentController;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -18,6 +20,12 @@ public class JobCartrackMailRaportHotLead implements Job{
 	
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		System.out.println("Job1 --->>> Hello geeks! Time is " + new Date());
-                con.test();
-		} 
+                String t = null;
+                try {
+                    t = con.runCrmCartrackReportHotLead();
+                } catch (Exception ex) {
+                    Logger.getLogger(JobCartrackMailRaportHotLead.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.out.println(t);
+        } 
 }

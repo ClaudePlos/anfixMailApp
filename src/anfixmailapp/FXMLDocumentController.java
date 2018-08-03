@@ -19,7 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javax.ejb.Schedule;
+
 
 
 /**
@@ -39,18 +39,19 @@ public class FXMLDocumentController implements Initializable {
     private TextArea txtArea01;
       
     @FXML
-    private void handleButtonAction(ActionEvent event) {
+    private void handleButtonAction(ActionEvent event) throws Exception {
         System.out.println("You clicked me!");
         String ret = test();
         label.setText(ret);
     }
     
     @FXML
-    private void runCrmCartrackReportHotLeadButton(ActionEvent event) {
+    private void runCrmCartrackReportHotLeadButton(ActionEvent event) throws Exception {
         runCrmCartrackReportHotLead();
+        txtArea01.setText("OK");
     }
     
-    public String test(){
+    public String test() throws Exception {
         List<CcDTO> ccList = new ArrayList<>();
         CcDTO cc = new CcDTO();
         cc.setMail("klaudsys@gmail.com");
@@ -60,14 +61,20 @@ public class FXMLDocumentController implements Initializable {
     }
     
     
-    public void runCrmCartrackReportHotLead() {
+    public String runCrmCartrackReportHotLead() throws Exception{
         String txt = "";
         List<UserVO> listUsers = crmSelect.getListUsersWithReportsSales(); 
         
         List<CcDTO> ccList = new ArrayList<>();
-        CcDTO cc = new CcDTO();
-        cc.setMail("klaudsys@gmail.com");
-        ccList.add(cc);
+        CcDTO ccStachira = new CcDTO();
+        ccStachira.setMail("lstachira@cartrack.pl");
+        ccList.add(ccStachira);
+        CcDTO ccMiklasz = new CcDTO();
+        ccMiklasz.setMail("tmiklaszewski@cartrack.pl");
+        ccList.add(ccMiklasz);
+        CcDTO ccClaude = new CcDTO();
+        ccClaude.setMail("claude-plos@o2.pl");
+        ccList.add(ccClaude);
         
         for ( UserVO u : listUsers ){
             txt = "Witaj,"+ "\n\n ";
@@ -117,14 +124,11 @@ public class FXMLDocumentController implements Initializable {
            
                 
                 String ret = mail.sendMail("Raport Hot Lead", txt, u.getEmail(), ccList);
-                        
+                txt += ret + "\n";  
             //} 
 
         }
-        
-        
-        
-        txtArea01.setText(txt);
+        return txt;
     }
     
     

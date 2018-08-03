@@ -6,6 +6,7 @@
 package anfixmailapp.pl.confing;
 
 import anfixmailapp.pl.models.CcDTO;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.Message;
@@ -26,7 +27,7 @@ public class SendMailTLS {
             
                 //Gmail
 //		final String username = "skowronski.klaudiusz@gmail.com";
-//		final String password = "Politechnika!@";
+//		final String slo = "";
 //
 //		Properties props = new Properties();
 //                props.setProperty("mail.transport.protocol", "smtp");     
@@ -41,7 +42,7 @@ public class SendMailTLS {
                 
                 //cartrack
                 final String username = "kskowronski@cartrack.pl";
-		final String password = "Politechnika!@";
+		final String slo = "Politechnika!@";
 
 		Properties props = new Properties();
                 props.setProperty("mail.transport.protocol", "smtp");     
@@ -57,7 +58,7 @@ public class SendMailTLS {
 		Session session = Session.getInstance(props,
 		  new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(username, password);
+				return new PasswordAuthentication(username, slo);
 			}
 		  });
 
@@ -82,7 +83,7 @@ public class SendMailTLS {
 
 			System.out.println("Done");
                         
-                        return "Done";
+                        return "sendMail - Done" + new Date();
 
 		} catch (MessagingException e) {
 			throw new RuntimeException(e);
