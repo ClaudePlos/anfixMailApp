@@ -66,7 +66,7 @@ public class SendMailTLS {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("kskowronski@cartrack.pl")); // mail From
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailTo)); // mail TO
-                        //message.setRecipients(Message.RecipientType.CC, InternetAddress.parse("claude-plos@o2.pl")); // mail CC
+                        message.setRecipients(Message.RecipientType.CC, InternetAddress.parse("claude-plos@o2.pl")); // mail CC
                         
 			message.setSubject(topic); // Temat
                         message.setContent(massage, "text/html; charset=utf-8");

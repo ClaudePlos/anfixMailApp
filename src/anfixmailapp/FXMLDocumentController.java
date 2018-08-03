@@ -49,12 +49,12 @@ public class FXMLDocumentController implements Initializable {
         
         for ( UserVO u : listUsers ){
             txt = "Witaj,"+ "\n\n ";
-            if ( u.getEmail().equals("lstachira@cartrack.pl") || u.getEmail().equals("tmiklaszewski@cartrack.pl") 
-                    || u.getEmail().equals("mnitka@cartrack.pl") || u.getEmail().equals("prakoczy@cartrack.pl")  ){
+//            if ( u.getEmail().equals("lstachira@cartrack.pl") || u.getEmail().equals("tmiklaszewski@cartrack.pl") 
+//                    || u.getEmail().equals("mnitka@cartrack.pl") || u.getEmail().equals("prakoczy@cartrack.pl")  ){
                 
-                if (u.getEmail().equals("lstachira@cartrack.pl") || u.getEmail().equals("tmiklaszewski@cartrack.pl") || u.getEmail().equals("mnitka@cartrack.pl")){
-                    u.setId(2);
-                }
+//                if (u.getEmail().equals("lstachira@cartrack.pl") || u.getEmail().equals("tmiklaszewski@cartrack.pl") || u.getEmail().equals("mnitka@cartrack.pl")){
+//                    u.setId(2);
+//                }
             
                 txt += u.getUserName() /*+ " id: " + u.getId()(*/ + "<br>";
                 txt +=  "<br>";
@@ -94,9 +94,9 @@ public class FXMLDocumentController implements Initializable {
                 txt +=  "</table>";
            
                 
-                String ret = mail.sendMail("Raport Hot Lead", txt, "claude-plos@o2.pl");
+                String ret = mail.sendMail("Raport Hot Lead", txt, u.getEmail());
                         
-            } 
+            //} 
 
         }
         
