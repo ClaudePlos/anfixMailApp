@@ -69,7 +69,7 @@ public class SendMailTLS {
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(mailTo)); // mail TO
                         
                         for (CcDTO cc : listCC) {
-                           message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(cc.getMail())); // mail CC 
+                           message.addRecipients(Message.RecipientType.CC, InternetAddress.parse(cc.getMail())); // mail CC 
                         }
                         
                         

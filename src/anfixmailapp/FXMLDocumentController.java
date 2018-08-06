@@ -56,6 +56,9 @@ public class FXMLDocumentController implements Initializable {
         CcDTO cc = new CcDTO();
         cc.setMail("klaudsys@gmail.com");
         ccList.add(cc);
+        CcDTO cc2 = new CcDTO();
+        cc2.setMail("skowronski.klaudiusz@gmail.com");
+        ccList.add(cc2);
         String ret = mail.sendMail("Topic","Massage","claude-plos@o2.pl", ccList);
         return ret;
     }
