@@ -47,14 +47,7 @@ public class AnfixMailApp extends Application {
             .withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(13, 46)) //HH:MM
             .withSchedule(CronScheduleBuilder.weeklyOnDayAndHourAndMinute(3, 13, 46))
             .withSchedule(CronScheduleBuilder.monthlyOnDayAndHourAndMinute(28, 13, 46))
-        */
-        Set daysOfWeek = new HashSet();
-        daysOfWeek.add(1);
-        daysOfWeek.add(2);
-        daysOfWeek.add(3);
-        daysOfWeek.add(4);
-        daysOfWeek.add(5);
-        
+        */ 
         Trigger trigger1 = TriggerBuilder.newTrigger()
 					.withIdentity("cronTrigger1", "group1")
 					.withSchedule(CronScheduleBuilder.cronSchedule("0 55 22 ? * MON-FRI")) //MM HH godz:22:55
