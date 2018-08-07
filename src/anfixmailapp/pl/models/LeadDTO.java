@@ -17,6 +17,13 @@ public class LeadDTO {
     private String territoryCode;
     private String regionName;
     
+    private String contactName;
+    private String phoneNumber;
+    private String phoneNumber2;
+    private String phoneMobile;
+    private String fleetSize;
+    private Boolean competitor;
+    
     private String abbr;
     private String nip;
     private String auditDc;
@@ -93,6 +100,56 @@ public class LeadDTO {
     public void setRegionName(String regionName) {
         this.regionName = regionName;
     }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhoneNumber2() {
+        return phoneNumber2;
+    }
+
+    public void setPhoneNumber2(String phoneNumber2) {
+        this.phoneNumber2 = phoneNumber2;
+    }
+
+    public String getPhoneMobile() {
+        return phoneMobile;
+    }
+
+    public void setPhoneMobile(String phoneMobile) {
+        this.phoneMobile = phoneMobile;
+    }
+
+    public String getFleetSize() {
+        return fleetSize;
+    }
+
+    public void setFleetSize(String fleetSize) {
+        this.fleetSize = fleetSize;
+    }
+
+    public Boolean getCompetitor() {
+        return competitor;
+    }
+
+    public void setCompetitor(Boolean competitor) {
+        this.competitor = competitor;
+    }
+
+   
     
     
     

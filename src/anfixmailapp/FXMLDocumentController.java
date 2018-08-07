@@ -11,7 +11,9 @@ import anfixmailapp.pl.models.CcDTO;
 import anfixmailapp.pl.models.LeadDTO;
 import anfixmailapp.pl.models.UserVO;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -31,6 +33,8 @@ public class FXMLDocumentController implements Initializable {
     private SendMailTLS mail = new SendMailTLS();
 
     private CrmSelect crmSelect = CrmSelect.getInstance();
+    
+    private SimpleDateFormat dtYYYYMMDD = new SimpleDateFormat("yyyy-MM-dd"); 
     
     @FXML
     private Label label;
@@ -91,10 +95,17 @@ public class FXMLDocumentController implements Initializable {
                 txt += u.getUserName() /*+ " id: " + u.getId()(*/ + "<br>";
                 txt +=  "<br>";
                 
-                txt += "Ilości hot leadów";
-                txt += "<table style=\"width:100%\">";
-                txt += "<tr><th style='text-align:left;'>Ilosc:</th><th style='text-align:left;'>OwnerName:</th><th style='text-align:left;'>UserCreated:</th><th style='text-align:left;'>RegionName:</th></tr>"; 
                 List<LeadDTO> leads = crmSelect.getListHotLeadForUser(u.getId().toString());
+                
+                int sum = 0;
+                for ( LeadDTO l : leads){
+                    sum += Integer.parseInt(l.getIlosc());
+                }
+                
+                txt += "Ilości hot leadów z " + dtYYYYMMDD.format(new Date()) + " : " + sum;
+                txt += "<table style=\"width:100%;border: 1px solid black;\">";
+                txt += "<tr><th style='text-align:left;'>Ilosc</th><th style='text-align:left;'>PH</th><th style='text-align:left;'>TM</th><th style='text-align:left;'>Region</th></tr>"; 
+                
                 
                 if ( leads.size() == 0 ) {
                     continue;
@@ -112,15 +123,26 @@ public class FXMLDocumentController implements Initializable {
                 txt +=  "<br>";
                 
                 txt += "Ilości hot leadów - Raport";
-                txt += "<table style=\"width:100%\">";
-                txt += "<tr><th style='text-align:left;'>Abbr:</th><th style='text-align:left;'>Nip:</th><th style='text-align:left;'>DateCreated:</th><th style='text-align:left;'>MeetingTr:</th></tr>"; 
+                txt += "<table style=\"width:100%;border: 1px solid black;\">";
+                txt += "<tr>"
+                    + "<th style='text-align:left;'>NIP</th>"
+                    + "<th style='text-align:left;'>Nazwa firmy</th>"
+                    + "<th style='text-align:left;'>Flota</th>"
+                    + "<th style='text-align:left;'>Konkurencja</th>"
+                    + "<th style='text-align:left;'>Osoba kontaktowa</th>"
+                    + "<th style='text-align:left;'>Numer Tel</th>"
+                    + "<th style='text-align:left;'>Zainteresowanie spotkaniem</th>"
+                    + "</tr>"; 
                 List<LeadDTO> leadsAbbr = crmSelect.getListHotLeadForUserAbbr(u.getId().toString());
                 for ( LeadDTO l : leadsAbbr){
                    txt += "<tr>"; 
-                   txt += "<td>" + l.getAbbr() + "</td>"
-                        + "<td>" + l.getNip() + "</td>"
-                        + "<td>" + l.getAuditDc() + "</td>"
-                        + "<td>" + l.getMeetingTry() + "</td>"
+                   txt += "<td>" + l.getNip() + "</td>"
+                        + "<td>" + l.getAbbr() + "</td>"
+                        + "<td>" + l.getFleetSize() + "</td>"
+                        + "<td>" + l.getCompetitor().toString() + "</td>"
+                        + "<td>" + l.getContactName() + "</td>"
+                        + "<td>" + l.getPhoneNumber() + " / " + l.getPhoneNumber2() + " / " + l.getPhoneMobile() + "</td>"
+                        + "<td> TAK </td>"
                         + "</tr>"; 
                 }
                 txt +=  "</table>";

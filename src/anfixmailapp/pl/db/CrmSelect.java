@@ -116,7 +116,8 @@ public class CrmSelect {
         
         List<LeadDTO> leadsL = new ArrayList<LeadDTO>();
         
-        List<Object []> leads = em.createNativeQuery("SELECT companys_data.abbr, companys_data.nip, processes_data.audit_dc,\n" +
+        List<Object []> leads = em.createNativeQuery("SELECT companys_view.abbr, companys_view.nip, processes_data.audit_dc,\n"
+                  + ", companys_view.contact_name, companys_view.phone_number, companys_view.phone_number2, companys_view.phone_mobile, companys_view.fleet_size_v, companys_view.competitor," +
                     "    CASE\n" +
                     "        WHEN processes_data.counter_phone_contacts >= 1 THEN 'TAK'\n" +
                     "        ELSE 'NIE'\n" +
@@ -125,8 +126,8 @@ public class CrmSelect {
                     "        WHEN processes_data.counter_meetings >= 1 THEN 'TAK'\n" +
                     "        ELSE 'NIE'\n" +
                     "    END meeting_try\n" +
-                    "FROM companys_data, processes_data\n" +
-                    "WHERE companys_data.id = processes_data.company_id and processes_data.process_type = 'HOT_LEAD' "
+                    "FROM companys_view, processes_data\n" +
+                    "WHERE companys_view.id = processes_data.company_id and processes_data.process_type = 'HOT_LEAD' "
                 + "and processes_data.owner_id = '" + userId + "'").getResultList();
         
         
@@ -136,7 +137,14 @@ public class CrmSelect {
             lead.setNip((String) l[1]);
             Timestamp timestamp = (Timestamp) l[2];
             lead.setAuditDc( timestamp.toString() );
-            lead.setMeetingTry((String) l[3]);
+            lead.setContactName((String) l[3]);
+            lead.setPhoneNumber((String) l[4]);
+            lead.setPhoneNumber2((String) l[5]);
+            lead.setPhoneMobile((String) l[6]); 
+            lead.setFleetSize((String) l[7]); 
+            lead.setCompetitor((Boolean) l[8]); 
+            
+            lead.setMeetingTry((String) l[10]);
             leadsL.add(lead);
         }
         
