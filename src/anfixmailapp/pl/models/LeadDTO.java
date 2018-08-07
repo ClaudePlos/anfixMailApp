@@ -21,7 +21,7 @@ public class LeadDTO {
     private String phoneNumber;
     private String phoneNumber2;
     private String phoneMobile;
-    private String fleetSize;
+    private Integer fleetSize;
     private Boolean competitor;
     
     private String abbr;
@@ -133,11 +133,11 @@ public class LeadDTO {
         this.phoneMobile = phoneMobile;
     }
 
-    public String getFleetSize() {
+    public Integer getFleetSize() {
         return fleetSize;
     }
 
-    public void setFleetSize(String fleetSize) {
+    public void setFleetSize(Integer fleetSize) {
         this.fleetSize = fleetSize;
     }
 

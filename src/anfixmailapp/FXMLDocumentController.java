@@ -102,9 +102,12 @@ public class FXMLDocumentController implements Initializable {
                     sum += Integer.parseInt(l.getIlosc());
                 }
                 
-                txt += "Ilości hot leadów z " + dtYYYYMMDD.format(new Date()) + " : " + sum;
-                txt += "<table style=\"width:100%;border: 1px solid black;\">";
-                txt += "<tr><th style='text-align:left;'>Ilosc</th><th style='text-align:left;'>PH</th><th style='text-align:left;'>TM</th><th style='text-align:left;'>Region</th></tr>"; 
+                txt += "Ilości hot leadów z " + dtYYYYMMDD.format(new Date()) + " szt.: " + sum;
+                txt += "<table style=\"width:100%;border-collapse: collapse;\">";
+                txt += "<tr><th style='border: 1px solid black'>Ilosc</th>"
+                        + "<th style='border: 1px solid black'>PH</th>"
+                        + "<th style='border: 1px solid black'>TM</th>"
+                        + "<th style='border: 1px solid black'>Region</th></tr>"; 
                 
                 
                 if ( leads.size() == 0 ) {
@@ -113,42 +116,47 @@ public class FXMLDocumentController implements Initializable {
                 
                 for ( LeadDTO l : leads){
                    txt += "<tr>"; 
-                   txt += "<td>" + l.getIlosc() + "</td>"
-                        + "<td>" + l.getOwnerName() + "</td>"
-                        + "<td> " + l.getAuditUc() + "</td>"
-                        + "<td>" + l.getRegionName()+ "</td>"
+                   txt += "<td style='border: 1px solid black'>" + l.getIlosc() + "</td>"
+                        + "<td style='border: 1px solid black'>" + l.getOwnerName() + "</td>"
+                        + "<td style='border: 1px solid black'> " + l.getAuditUc() + "</td>"
+                        + "<td style='border: 1px solid black'>" + l.getRegionName()+ "</td>"
                         + "</tr>";                  
                 }
                 txt +=  "</table>";
                 txt +=  "<br>";
                 
                 txt += "Ilości hot leadów - Raport";
-                txt += "<table style=\"width:100%;border: 1px solid black;\">";
+                txt += "<table style=\"width:100%;border-collapse: collapse;\">";
                 txt += "<tr>"
-                    + "<th style='text-align:left;'>NIP</th>"
-                    + "<th style='text-align:left;'>Nazwa firmy</th>"
-                    + "<th style='text-align:left;'>Flota</th>"
-                    + "<th style='text-align:left;'>Konkurencja</th>"
-                    + "<th style='text-align:left;'>Osoba kontaktowa</th>"
-                    + "<th style='text-align:left;'>Numer Tel</th>"
-                    + "<th style='text-align:left;'>Zainteresowanie spotkaniem</th>"
+                    + "<th style='border: 1px solid black'>NIP</th>"
+                    + "<th style='border: 1px solid black'>Nazwa firmy</th>"
+                    + "<th style='border: 1px solid black'>Flota</th>"
+                    + "<th style='border: 1px solid black'>Konkurencja</th>"
+                    + "<th style='border: 1px solid black'>Osoba kontaktowa</th>"
+                    + "<th style='border: 1px solid black'>Numer Tel</th>"
+                    + "<th style='border: 1px solid black'>Zainteresowanie spotkaniem</th>"
                     + "</tr>"; 
                 List<LeadDTO> leadsAbbr = crmSelect.getListHotLeadForUserAbbr(u.getId().toString());
                 for ( LeadDTO l : leadsAbbr){
-                   txt += "<tr>"; 
-                   txt += "<td>" + l.getNip() + "</td>"
-                        + "<td>" + l.getAbbr() + "</td>"
-                        + "<td>" + l.getFleetSize() + "</td>"
-                        + "<td>" + l.getCompetitor().toString() + "</td>"
-                        + "<td>" + l.getContactName() + "</td>"
-                        + "<td>" + l.getPhoneNumber() + " / " + l.getPhoneNumber2() + " / " + l.getPhoneMobile() + "</td>"
-                        + "<td> TAK </td>"
+                
+                if ( l.getCompetitor() == null )
+                    l.setCompetitor(Boolean.FALSE);
+                    
+                txt += "<tr>"; 
+                   txt += "<td style='border: 1px solid black'>" + l.getNip() + "</td>"
+                        + "<td style='border: 1px solid black'>" + l.getAbbr() + "</td>"
+                        + "<td style='border: 1px solid black'>" + l.getFleetSize() + "</td>"
+                        + "<td style='border: 1px solid black'>" + l.getCompetitor().toString().replace("false", "NIE").replace("true", "TAK") + "</td>"
+                        + "<td style='border: 1px solid black'>" + l.getContactName() + "</td>"
+                        + "<td style='border: 1px solid black'>" + l.getPhoneNumber() + " / " + l.getPhoneNumber2() + " / " + l.getPhoneMobile() + "</td>"
+                        + "<td style='border: 1px solid black'> TAK </td>"
                         + "</tr>"; 
                 }
                 txt +=  "</table>";
            
                 
-                String ret = mail.sendMail("Raport Hot Lead", txt, u.getEmail(), ccList);
+                String ret = mail.sendMail("Raport Hot Lead", txt.replace("null", ""), u.getEmail()
+                        , ccList);
                 txt += ret + "\n";  
             //} 
 
