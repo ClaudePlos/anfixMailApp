@@ -35,7 +35,7 @@ public class AnfixMailApp extends Application {
         
         Scene scene = new Scene(root);
         //stage.getIcons().add(new Image("/com/images/icon.png"));
-        stage.setTitle("#anfix Klaudiusz");
+        stage.setTitle("#anfix Klaudiusz v.08.08.2018");
         
         stage.setScene(scene);
         stage.show(); 

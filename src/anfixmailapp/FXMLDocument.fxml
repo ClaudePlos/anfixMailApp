@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -10,14 +11,19 @@
     <children>
       <Pane layoutX="5.0" layoutY="7.0" prefHeight="290.0" prefWidth="459.0" style="-fx-background-color: pink;">
          <children>
-            <TextArea layoutX="14.0" layoutY="5.0" prefHeight="35.0" prefWidth="441.0" promptText="Buttony tylko testowo!! jest quartz jako cron, tam ustawiaj kiedy ma się zadanie uruchamiać" />
+            <Label layoutX="3.0" layoutY="4.0" text="Buttony tylko testowo!! jest quartz jako cron, tam ustawiaj kiedy ma się zadanie uruchamiać">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Button layoutX="97.0" layoutY="23.0" mnemonicParsing="false" onAction="#runTestRestButton" text="#TestRest" />
          </children>
       </Pane>
         
       <TextArea fx:id="txtArea01" layoutX="14.0" layoutY="178.0" prefHeight="98.0" prefWidth="441.0" />
       <Label fx:id="label" layoutX="10.0" layoutY="161.0" text="Text:" />
-      <Button fx:id="runCrmCartrackReportHotLead" layoutX="20.0" layoutY="80.0" onAction="#runCrmCartrackReportHotLeadButton" text="#runCrmCartrackReportHotLead" />
-      <Button fx:id="buttonTest" layoutX="20.0" layoutY="50.0" onAction="#handleButtonAction" text="#buttonTest" />
+      <Button fx:id="runCrmCartrackReportHotLead" layoutX="10.0" layoutY="60.0" onAction="#runCrmCartrackReportHotLeadButton" text="#runCrmCartrackReportHotLead" />
+      <Button fx:id="buttonTest" layoutX="10.0" layoutY="30.0" onAction="#handleButtonAction" text="#buttonTest" />
         
         
         

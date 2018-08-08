@@ -10,7 +10,8 @@ import anfixmailapp.pl.db.CrmSelect;
 import anfixmailapp.pl.models.CcDTO;
 import anfixmailapp.pl.models.LeadDTO;
 import anfixmailapp.pl.models.UserVO;
-import java.net.URL;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,12 +22,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javax.net.ssl.HttpsURLConnection;
+import java.net.URL;
+import java.io.*;
 
 
 
 /**
  *
- * @author k.skowronski
+ * @author k.skowronski 
  */
 public class FXMLDocumentController implements Initializable {
     
@@ -35,6 +39,8 @@ public class FXMLDocumentController implements Initializable {
     private CrmSelect crmSelect = CrmSelect.getInstance();
     
     private SimpleDateFormat dtYYYYMMDD = new SimpleDateFormat("yyyy-MM-dd"); 
+    
+    private String url = "http://localhost:18080/api";
     
     @FXML
     private Label label;
@@ -55,6 +61,12 @@ public class FXMLDocumentController implements Initializable {
         txtArea01.setText("OK");
     }
     
+    @FXML
+    private void runTestRestButton(ActionEvent event) throws Exception {
+        runTestRest();
+        txtArea01.setText("OK");
+    }
+    
     public String test() throws Exception {
         List<CcDTO> ccList = new ArrayList<>();
         CcDTO cc = new CcDTO();
@@ -68,7 +80,7 @@ public class FXMLDocumentController implements Initializable {
     }
     
     
-    public String runCrmCartrackReportHotLead() throws Exception{
+    public String runCrmCartrackReportHotLead() throws Exception {
         String txt = "";
         List<UserVO> listUsers = crmSelect.getListUsersWithReportsSales(); 
         
@@ -162,6 +174,39 @@ public class FXMLDocumentController implements Initializable {
 
         }
         return txt;
+    }
+    
+    public String runTestRest() throws Exception {
+        
+        URL obj = new URL(url+"/v1.0/dialer/start-update-dialer-and-notes");
+        //HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        //add reuqest header
+        con.setConnectTimeout(5000);
+        con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+        con.setDoOutput(true);
+        con.setDoInput(true);
+        con.setRequestMethod("POST");
+        
+        String json  = "{\"userName\": \"klaudiusz\"" +
+                    ",\"change\": \"Qwk7h9ykIdBZYKO1PJQaKozzlgDuE3yW7VQmPOI5dapYa2i06i\"" +
+                    ",\"method\": \"md5\" }";
+
+
+        OutputStream os = con.getOutputStream();
+        os.write(json.getBytes("UTF-8"));
+        os.close();
+        
+        // read the response
+        InputStream in = new BufferedInputStream(con.getInputStream());
+        String result = org.apache.commons.io.IOUtils.toString(in, "UTF-8");
+        System.out.println(result);
+//        JSONArray jsonArray = new JSONArray(result);
+
+        //in.close();
+        con.disconnect();
+        
+        return "OK";
     }
     
     
