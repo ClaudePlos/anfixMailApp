@@ -88,7 +88,8 @@ public class CrmSelect {
         
         List<LeadDTO> leadsL = new ArrayList<LeadDTO>();
         
-        List<Object []> leads = em.createNativeQuery("SELECT count(1) hot_leads, processes_data.owner_name, processes_data.audit_uc, regions.region_name " 
+        List<Object []> leads = em.createNativeQuery("SELECT count(1) hot_leads, processes_data.owner_name, processes_data.audit_uc, regions.region_name "
+                + " , string_agg(nip,',') nip" 
                 + "FROM processes_data, companys_data, regions " 
                 + "WHERE companys_data.id = processes_data.company_id "
                 + "and regions.id = companys_data.province_id "
@@ -104,6 +105,7 @@ public class CrmSelect {
             lead.setOwnerName((String) l[1]);
             lead.setAuditUc((String) l[2]);
             lead.setRegionName((String) l[3]);
+            lead.setNip((String) l[4]);
             leadsL.add(lead);
         }
         

@@ -119,6 +119,7 @@ public class FXMLDocumentController implements Initializable {
                 txt += "<tr><th style='border: 1px solid black'>Ilosc</th>"
                         + "<th style='border: 1px solid black'>PH</th>"
                         + "<th style='border: 1px solid black'>TM</th>"
+                        + "<th style='border: 1px solid black'>NIPy</th>"
                         + "<th style='border: 1px solid black'>Region</th></tr>"; 
                 
                 
@@ -131,6 +132,7 @@ public class FXMLDocumentController implements Initializable {
                    txt += "<td style='border: 1px solid black'>" + l.getIlosc() + "</td>"
                         + "<td style='border: 1px solid black'>" + l.getOwnerName() + "</td>"
                         + "<td style='border: 1px solid black'> " + l.getAuditUc() + "</td>"
+                        + "<td style='border: 1px solid black'> " + l.getNip() + "</td>"
                         + "<td style='border: 1px solid black'>" + l.getRegionName()+ "</td>"
                         + "</tr>";                  
                 }
