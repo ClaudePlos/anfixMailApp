@@ -128,7 +128,7 @@ public class CrmSelect {
                     "        WHEN processes_data.counter_meetings >= 1 THEN 'TAK'\n" +
                     "        ELSE 'NIE'\n" +
                     "    END meeting_try\n" +
-                    "FROM companys_view, processes_data\n" +
+                    ", companys_view.province_name FROM companys_view, processes_data\n" +
                     "WHERE companys_view.id = processes_data.company_id and processes_data.process_type = 'HOT_LEAD' "
                 + "and processes_data.owner_id = '" + userId + "'").getResultList();
         
@@ -148,6 +148,7 @@ public class CrmSelect {
             lead.setCompetitor((Boolean) l[8]); 
             
             lead.setMeetingTry((String) l[10]);
+            lead.setRegionName((String) l[11]);
             leadsL.add(lead);
         }
         

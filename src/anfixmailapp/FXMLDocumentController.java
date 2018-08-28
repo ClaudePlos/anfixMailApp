@@ -148,7 +148,7 @@ public class FXMLDocumentController implements Initializable {
                     + "<th style='border: 1px solid black'>Konkurencja</th>"
                     + "<th style='border: 1px solid black'>Osoba kontaktowa</th>"
                     + "<th style='border: 1px solid black'>Numer Tel</th>"
-                    + "<th style='border: 1px solid black'>Zainteresowanie spotkaniem</th>"
+                    + "<th style='border: 1px solid black'>Województwo</th>"
                     + "</tr>"; 
                 List<LeadDTO> leadsAbbr = crmSelect.getListHotLeadForUserAbbr(u.getId().toString());
                 for ( LeadDTO l : leadsAbbr){
@@ -163,7 +163,7 @@ public class FXMLDocumentController implements Initializable {
                         + "<td style='border: 1px solid black'>" + l.getCompetitor().toString().replace("false", "NIE").replace("true", "TAK") + "</td>"
                         + "<td style='border: 1px solid black'>" + l.getContactName() + "</td>"
                         + "<td style='border: 1px solid black'>" + l.getPhoneNumber() + " / " + l.getPhoneNumber2() + " / " + l.getPhoneMobile() + "</td>"
-                        + "<td style='border: 1px solid black'> TAK </td>"
+                        + "<td style='border: 1px solid black'>" + l.getRegionName() + "</td>"
                         + "</tr>"; 
                 }
                 txt +=  "</table>";
