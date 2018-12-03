@@ -42,12 +42,15 @@ public class AnfixMailApp extends Application {
         stage.setScene(scene);
         stage.show(); 
         
+        //01 job1 - wysyłanie maili  z przypisanymi HOT LEADAMi
         JobDetail job1 = JobBuilder.newJob(JobCartrackMailRaportHotLead.class).withIdentity("job1", "group1").build();
+        
+        //02 job2 - sprawdzanie czy są przeterminowane SZANSE - 30 / OBSLUGI - 15 dni (date_deadline)
         JobDetail job2 = JobBuilder.newJob(JobCartrackUpdateStatus.class).withIdentity("job2", "group2").build();
-        JobDetail job3 = JobBuilder.newJob(JobCartrackZTestCron.class).withIdentity("job3", "group3").build();
+        //JobDetail job3 = JobBuilder.newJob(JobCartrackZTestCron.class).withIdentity("job3", "group3").build();
 
         /*  
-            .withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ?")) // 5s
+            .withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ?")) // 5s - uruchomienie po 5s i co 5 sekund 
             .withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(13, 46)) //HH:MM
             .withSchedule(CronScheduleBuilder.weeklyOnDayAndHourAndMinute(3, 13, 46))
             .withSchedule(CronScheduleBuilder.monthlyOnDayAndHourAndMinute(28, 13, 46))
@@ -60,14 +63,14 @@ public class AnfixMailApp extends Application {
         // drugie zadanie 
         Trigger trigger2 = TriggerBuilder.newTrigger()
 					.withIdentity("cronTrigger2", "group2")
-					.withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ?")) 
+					.withSchedule(CronScheduleBuilder.cronSchedule("0/5 * * * * ?")) //co 5s
 					.build();
         
         //#3
-        Trigger trigger3 = TriggerBuilder.newTrigger()
-					.withIdentity("cronTrigger3", "group3")
-					.withSchedule(CronScheduleBuilder.cronSchedule("0/10 * * * * ?")) //10s
-					.build();
+//        Trigger trigger3 = TriggerBuilder.newTrigger()
+//					.withIdentity("cronTrigger3", "group3")
+//					.withSchedule(CronScheduleBuilder.cronSchedule("0/10 * * * * ?")) //10s
+//					.build();
         
         
 			
@@ -75,7 +78,7 @@ public class AnfixMailApp extends Application {
         scheduler1.start();
         scheduler1.scheduleJob(job1, trigger1);    
         scheduler1.scheduleJob(job2, trigger2);  
-        scheduler1.scheduleJob(job3, trigger3); 
+        //scheduler1.scheduleJob(job3, trigger3); 
     }
      
     /**
